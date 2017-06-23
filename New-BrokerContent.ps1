@@ -22,7 +22,8 @@
     .\New-BrokerContent.ps1 -Name "Google Link" -Content "https://www.google.com" -DesktopGroup VDA-PrePROD-W2K12R2 -iconpath "c:\temp\google-1015752_640.ico"
 
 .NOTES
-    Author : Etienne JEANNEAU @JeanneauEtienne
+    Author  : Etienne JEANNEAU 
+	Twitter : @JeanneauEtienne
 
 #>
 
