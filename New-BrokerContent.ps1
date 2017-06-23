@@ -26,10 +26,12 @@
 
 #>
 
-Param([String]$Name,
-    [String]$Content,
-    [String]$DesktopGroup,
-    [String]$iconpath)
+Param(
+	[Parameter(Mandatory=$true)][String]$Name,
+    [Parameter(Mandatory=$true)][String]$Content,
+    [Parameter(Mandatory=$true)][String]$DesktopGroup,
+    [Parameter(Mandatory=$true)][String]$iconpath
+	)
 
 # Add Citrix Snapins
 asnp citrix*
