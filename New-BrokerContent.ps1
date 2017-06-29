@@ -16,23 +16,23 @@
     The name of the Desktop Group you want to bind to your published content.
     
 .PARAMETER iconpath
-    The path to the .ico file. Best resolution is 256px by 256px.
+    (Optional) The path to the .ico file. Best resolution is 256px by 256px.
 
 .EXAMPLE
     .\New-BrokerContent.ps1 -Name "Google Link" -Content "https://www.google.com" -DesktopGroup VDA-PrePROD-W2K12R2 -iconpath "c:\temp\google-1015752_640.ico"
 
 .NOTES
     Author  : Etienne JEANNEAU 
-	Twitter : @JeanneauEtienne
+    Twitter : @JeanneauEtienne
 
 #>
 
 Param(
-	[Parameter(Mandatory=$true)][String]$Name,
+    [Parameter(Mandatory=$true)][String]$Name,
     [Parameter(Mandatory=$true)][String]$Content,
     [Parameter(Mandatory=$true)][String]$DesktopGroup,
-    [Parameter(Mandatory=$true)][String]$iconpath
-	)
+    [Parameter(Mandatory=$false)][String]$iconpath
+    )
 
 # Add Citrix Snapins
 asnp citrix*
@@ -40,11 +40,13 @@ asnp citrix*
 # Create the Citrix Published Content
 New-BrokerApplication -ApplicationType PublishedContent -CommandLineExecutable $Content -Name $Name -DesktopGroup $DesktopGroup
 
+if($iconpath -ne $null){
 # Encode the .ico file in Base64
-$b64ico = [convert]::ToBase64String((get-content $iconpath -encoding byte))
+    $b64ico = [convert]::ToBase64String((get-content $iconpath -encoding byte))
 
-# Adds the encoded icon in Citrix Database
-$ctxico = New-BrokerIcon -EncodedIconData $b64ico
+    # Adds the encoded icon in Citrix Database
+    $ctxico = New-BrokerIcon -EncodedIconData $b64ico
 
-# Set the icon to the newly created application
-Set-BrokerApplication -Name $Name -IconUid $ctxico.Uid
+    # Set the icon to the newly created application
+    Set-BrokerApplication -Name $Name -IconUid $ctxico.Uid
+}
